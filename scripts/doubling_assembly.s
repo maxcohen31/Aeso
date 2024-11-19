@@ -3,25 +3,26 @@
     .type map, %function
 
 map:
-    push {r4, r5, lr}
+    push {lr}
     cmp r0, #0 @; controllo array nullo 
     moveq pc, lr
     cmp r1, #0 @; size == 0?
     beq end
-    mov r3, r0 @; salvo indirizzo array
-    mov r4, r1 @; salvo size in r4
-    mov r5, #0 @; i = 0
+    mov r3, r0
+    mov r12, #0 @; i = 0
 loop:
-    cmp r5, r4 @; i == size
+    cmp r12, r1 @; i == size
     beq end
-    ldr r0, [r3, r5, lsl #2] @; leggo array[i]
+    push {r0, r12}
+    ldr r0, [r3, r12, lsl #2] @; leggo array[i]
     blx r2  @; chiama la doubling
-    str r0, [r3, r5, lsl #2] @; salvo il risultato di doubling
-    add r5, r5, #1 @; i++ 
+    str r0, [r3, r12, lsl #2] @; salvo il risultato di doubling
+    pop {r0, r12}
+    add r12, r12, #1 @; i++ 
     b loop
 end:
-    mov r0, #0
-    pop {r4, r5, lr}
+    mov r0, r3 
+    pop {lr}
     mov pc, lr
 
 

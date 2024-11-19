@@ -10,12 +10,11 @@ int doubling(int x)
 int main(int argc, char **argv)
 {
 
-    int size = 10;
     int a[10] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
 
-    map(a, size, doubling);
+    map(a, 10, doubling);
 
-    for (int j = 0; j < size; j++)
+    for (int j = 0; j < 10; j++)
     {
         printf("%d ", a[j]);
     }
