@@ -14,7 +14,7 @@ main:
 loop: 
     cmp r3, r1 // i == size 
     beq end
-    ldr r12, [r0, r3 lsl #2] // carico in r12 array[i]
+    ldr r12, [r0, r3, lsl #2] // carico in r12 array[i]
     add r2, r2, r12 // aggiorno result -> result += array[i]
     add r3, r3, #1
     b loop
