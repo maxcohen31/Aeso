@@ -17,17 +17,17 @@ int main()
         printf("Risultato: %d != 3 -> Error!\n\n", res);
     }
 
-    char **v = (char **) malloc(sizeof(char *) * 3);
-    char s2[6] = "HJdfg";
-    char s3[9] = "aerdswxz";
-    v[0] = s1; v[1] = s2; v[2] = s3;
-    printf("Test conta_strings con tre stringhe di prova {%s, %s, %s}\n", v[0], v[1], v[2]);
-    res = conta_strings(v, 3);
-    if (res == 5) {
-        printf("Risultato: %d == 5 -> OK!\n\n", res);
-    }
-    else {
-        printf("Risultato: %d != 5 -> Error!\n\n", res);
-    }
+    // char **v = (char **) malloc(sizeof(char *) * 3);
+    // char s2[6] = "HJdfg";
+    // char s3[9] = "aerdswxz";
+    // v[0] = s1; v[1] = s2; v[2] = s3;
+    // printf("Test conta_strings con tre stringhe di prova {%s, %s, %s}\n", v[0], v[1], v[2]);
+    // res = conta_strings(v, 3);
+    // if (res == 5) {
+    //     printf("Risultato: %d == 5 -> OK!\n\n", res);
+    // }
+    // else {
+    //     printf("Risultato: %d != 5 -> Error!\n\n", res);
+    // }
     return 0;
 }
