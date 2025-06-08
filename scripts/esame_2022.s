@@ -43,7 +43,7 @@ uguali:
 crea_nodo:
     bl malloc
     mov r4, r0 @; puntatore al nuovo elemento
-    str r0, [r4] @; salva c
+    strb r0, [r4] @; salva c
     mov r5, #1 @; occ=1
     str r5, [r4, #4] @; salva occ
     str r1, [r4, #8] @; next -> lista
