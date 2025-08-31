@@ -16,23 +16,17 @@
 
 insert:
     push {r4, r5, lr}        @ Salvo registri callee-saved che userò + link register
-
     mov r4, r0               @ r4 = lista (salvo copia per restituire la testa)
     mov r5, r1               @ r5 = info  (valore da inserire)
-
     mov r0, #8               @ sizeof(ELEM) = 8 byte (2 campi int/pointer)
     bl malloc                @ malloc(8) -> r0 = nuovo nodo o NULL
-
     cmp r0, #0
     beq failed_malloc        @ Se malloc fallisce, ritorna NULL
-
     str r5, [r0]             @ nuovo->info = info
     mov r1, #0
     str r1, [r0, #4]         @ nuovo->next = NULL
-
     cmp r4, #0
     beq empty_list           @ Se lista == NULL -> nuovo nodo diventa la testa
-
     /* Caso lista NON vuota: scorri fino all’ultimo nodo */
     mov r2, r4               @ r2 = cursore = lista
 traverse_list:
