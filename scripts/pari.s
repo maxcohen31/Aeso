@@ -11,7 +11,7 @@ loop:
     cmp r2, r1 @;i == size
     beq end
     ldr r12, [r0, r2, lsl #2]
-    tst r12, #1 @; testa bit meno significativo
+    tst r12, #1 @; testa bit meno significativo - o anche and r12, r12, #1
     beq update @; se pari aagiorna result
     add r2, r2, #1 @; i++
     b loop
