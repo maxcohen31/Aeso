@@ -10,41 +10,48 @@
     libreria malloc.
 */
 
-.text
-.global insert
-.type insert, %function
-
-// r0 contiene puntatore a next 
-// r1 contiene puntatore a info
+    .text
+    .global insert
+    .type insert, %function
 
 insert:
-    push {r4, r5, lr}
-    mov r2, r0 @ salvo in r2 elem->info
-    mov r3, r1 @ salvo in r3 elem->next
-    bl malloc
-    mov r4, r0 @ nuovo nodo
-    cmp r4, #0 @ malloc fallita
-    beq failed_malloc
-    str r3, [r4] @ nuovo nodo -> info
-    mov r5, #0 @ NULL
-    str r5, [r4, #4] @ nuovo nodo -> next = NULL
-    cmp r2, #0 @ lista vuota
-    beq empty_list
-traverse_list:
-    ldr r1, [r2, #4] 
-    cmp r1, #0
-    beq found
-    movne r2, r1 @ scorre lista fino a NULL
-    b traverse_list
-found:
-    str r4, [r2, #4] @ ultimo_nodo -> next = nuovo_nodo
-    mov r0, r0 @ restituisce nodo_originale
-    pop {r4, r5, pc}
-empty_list:
-    mov r0, r4
-    pop {r4, r5, pc}
-failed_malloc:
-    mov r0, r4
-    pop {r4, pc}
+    push {r4, r5, lr}        @ Salvo registri callee-saved che userò + link register
 
+    mov r4, r0               @ r4 = lista (salvo copia per restituire la testa)
+    mov r5, r1               @ r5 = info  (valore da inserire)
+
+    mov r0, #8               @ sizeof(ELEM) = 8 byte (2 campi int/pointer)
+    bl malloc                @ malloc(8) -> r0 = nuovo nodo o NULL
+
+    cmp r0, #0
+    beq failed_malloc        @ Se malloc fallisce, ritorna NULL
+
+    str r5, [r0]             @ nuovo->info = info
+    mov r1, #0
+    str r1, [r0, #4]         @ nuovo->next = NULL
+
+    cmp r4, #0
+    beq empty_list           @ Se lista == NULL -> nuovo nodo diventa la testa
+
+    /* Caso lista NON vuota: scorri fino all’ultimo nodo */
+    mov r2, r4               @ r2 = cursore = lista
+traverse_list:
+    ldr r1, [r2, #4]         @ r1 = cursore->next
+    cmp r1, #0
+    beq found                @ se cursore->next == NULL, ho trovato la fine
+    mov r2, r1               @ cursore = cursore->next
+    b traverse_list
+
+found:
+    str r0, [r2, #4]         @ cursore->next = nuovo
+    mov r0, r4               @ restituisco la testa originale
+    pop {r4, r5, pc}         @ ripristina registri e ritorna
+
+empty_list:
+    mov r0, r0               @ r0 già contiene nuovo nodo, che è la testa
+    pop {r4, r5, pc}
+
+failed_malloc:
+    mov r0, #0               @ malloc fallita: ritorna NULL
+    pop {r4, r5, pc}
 
