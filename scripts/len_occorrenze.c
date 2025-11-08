@@ -7,7 +7,7 @@ struct elem
     char *s;
 };
 
-extern int lenOccorrenze(struct elem *v, int N, int key);
+extern int occorrenze(struct elem *v, int N, int key);
 
 int main(int argc, char **argv)
 {
@@ -21,7 +21,7 @@ int main(int argc, char **argv)
         {9, "pollo"}
     };
 
-    int result = lenOccorrenze(v, 4, 12); /* chiave 12 */
+    int result = occorrenze(v, 4, 12); /* chiave 12 */
     printf("# Strings length associated with key k is: %d", result);
     return 0;
 }

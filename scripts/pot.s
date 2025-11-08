@@ -7,11 +7,11 @@
 pot:
     push {lr}
     cmp r0, #0
-    beq print_false
+    beq true_msg
 
     bl conta_bit_a_uno
     cmp r0, #1
-    beq print_true
+    beq true_msg
 
 print_false:
     ldr r0, =false_msg
