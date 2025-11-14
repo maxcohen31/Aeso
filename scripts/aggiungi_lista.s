@@ -6,13 +6,13 @@
 /* r1 indirizzo primo elemento lista*/
 
 aggiungi:
-    push {r4-r5, lr}
+    push {r4, r5, lr}
     mov r12, r0
 _loop:
     cmp r1, #0 @ lista null
     beq _crea_elemento
     ldrb r2, [r1] @ carica primo carattere
-    cmp r2, r8 @ confronto del carattere nella lista con quello da aggiungere
+    cmp r2, r0 @ confronto del carattere nella lista con quello da aggiungere
     beq _uguali
     ldr r1, [r1, #8] @ scorro lista se i caratteri sono diversi
     b _loop
@@ -30,6 +30,6 @@ _crea_elemento:
     str r5, [r4, #4] @ salva occorrenze = 1 in offset 4
     str r1, [r4, #8] @ collega il nuovo nodo alla lista 
     mov r0, r4 @ restituisci il nuovo nodo in r0 
-    pop {r4-r5, lr}
+    pop {r4, r5, lr}
     bx lr        
 
