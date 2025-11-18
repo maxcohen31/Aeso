@@ -9,8 +9,8 @@ fibonacciRec:
     ble _end_one
     push {r4-r6, lr}
     mov r4, r0 @ save r0
-    sub r4, r4, #1 @ n-1 in r1
-    mov r0, r4 @ r0 becoms n-1
+    sub r4, r4, #1 @ n-1 in r4
+    mov r0, r4 @ r0 becomes n-1
     push {r0, lr}
     bl fibonacciRec
     mov r5, r0 @ save fib(n-1) 
