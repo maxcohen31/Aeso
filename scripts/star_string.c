@@ -25,7 +25,7 @@ char *concat(char *str1, char *str2)
         exit(EXIT_FAILURE);
     }
     memcpy(res, str1, len1);
-    memcpy(res + len2, str2, len2 + 1);
+    memcpy(res + len1, str2, len2 + 1);
     return res;
 }
 
