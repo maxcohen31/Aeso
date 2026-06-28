@@ -9,23 +9,14 @@
 
 recSum:
     cmp r1, #0
-    ble _end
-    push {r4, r5, lr}
-    mov r4, r0 @ save array address 
-    mov r5, r1 @ save n
-    sub r5, r5, #1 @ n - 1
-    ldr r12, [r4, r5, lsl #2] @ load arr[n-1]
-    push {r12} @ save r12 since can be overwritten
-    mov r0, r4 @ array base address
-    mov r1, r5 @ r1 becomes n-1
-    bl recSum @ recSum(arr, n-1)
-    mov r3, r0 @ save result
-    pop {r12}
-
-    add r0, r3, r12; @ r0 = recSum(arr, n-1) + arr[n-1]
-    pop {r4, r5, lr}
+    beq _end
+    sub r1, r1, #1 // r1 = n - 1
+    ldr r2, [r0, r1, lsl #2] // arr[n-1]
+    push {r2, lr} // saving arr[n-1] on the stack
+    bl recSum // r0 = recSum(arr[n-1])
+    pop {r3, lr} // r3 = arr[n-1]
+    add r0, r0, r3
     mov pc, lr
-
 _end:
     mov r0, #0
     bx lr
